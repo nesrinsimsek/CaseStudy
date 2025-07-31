@@ -1,5 +1,7 @@
 
+using CaseBusiness.DependencyInjection;
 using CaseDataAccess;
+using CaseDataAccess.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+DataAccessServiceRegistration.RegisterDataAccessServices(builder.Services);
+BusinessServiceRegistration.RegisterBusinessServices(builder.Services);
 
 var app = builder.Build();
 

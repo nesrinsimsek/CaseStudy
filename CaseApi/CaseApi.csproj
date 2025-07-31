@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CaseBusiness\CaseBusiness.csproj" />
     <ProjectReference Include="..\CaseDataAccess\CaseDataAccess.csproj" />
   </ItemGroup>
 
