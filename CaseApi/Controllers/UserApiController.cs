@@ -2,13 +2,14 @@
 using CaseApi.Dtos;
 using CaseBusiness.Abstract;
 using CaseBusiness.Concrete;
+using CaseDataAccess.Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace CaseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UserApiController : ControllerBase
     {
@@ -23,10 +24,15 @@ namespace CaseApi.Controllers
             _response = new();
         }
 
-        [HttpGet("ById/{userId}")]
-        public async Task<ActionResult<UserDto>> Get(int userId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> Get(int id)
         {
-            var user = await _userManager.GetUserById(userId);
+            var user = await _userManager.GetUserById(id);
+            if (user == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
             var userDto = _mapper.Map<UserDto>(user);
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = userDto;

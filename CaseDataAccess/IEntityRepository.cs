@@ -13,7 +13,7 @@ namespace CaseDataAccess
         Task<T> Get(Expression<Func<T, bool>> filter);
         Task<List<T>> GetList(Expression<Func<T, bool>> filter = null);
         Task Add(T entity);
-        Task Update(T entity);
+        Task Update(Expression<Func<T, bool>> filter, T entity);
         Task Delete(Expression<Func<T, bool>> filter);
     }
 }

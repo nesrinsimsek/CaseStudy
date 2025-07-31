@@ -8,17 +8,19 @@ using System.Net;
 
 namespace CaseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/todoitems")]
     [ApiController]
     public class TodoItemApiController : ControllerBase
     {
         private readonly ITodoItemManager _todoItemManager;
+        private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
         protected ApiResponse _response;
 
-        public TodoItemApiController(ITodoItemManager todoItemManager, IMapper mapper)
+        public TodoItemApiController(ITodoItemManager todoItemManager, IUserManager userManager, IMapper mapper)
         {
             _todoItemManager = todoItemManager;
+            _userManager = userManager;
             _mapper = mapper;
             _response = new();
         }
@@ -26,38 +28,72 @@ namespace CaseApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> Add([FromBody] TodoItemCreateDto todoItemCreateDto) 
         {
-            TodoItem todoItem = _mapper.Map<TodoItem>(todoItemCreateDto);
+            var user = await _userManager.GetUserById(todoItemCreateDto.User_Id);
+            if (!ModelState.IsValid || (user == null))
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
+            }
+
+            var todoItem = _mapper.Map<TodoItem>(todoItemCreateDto);
             await _todoItemManager.AddTodoItem(todoItem);
             _response.StatusCode = HttpStatusCode.Created;
-            return CreatedAtAction(nameof(Get), new { todoItemId = todoItem.Id }, _response);
+            return CreatedAtAction(nameof(Get), new { id = todoItem.Id }, _response);
 
 
         }
 
-        [HttpPut("{todoItemId}")]
-        public async Task<ActionResult<ApiResponse>> Update(int todoItemId, [FromBody] TodoItemUpdateDto todoItemUpdateDto) //bunu dto yap
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ApiResponse>> Update(int id, [FromBody] TodoItemUpdateDto todoItemUpdateDto) 
         {
-            TodoItem todoItem = _mapper.Map<TodoItem>(todoItemUpdateDto);
-            await _todoItemManager.UpdateTodoItem(todoItem);
+            var user = await _userManager.GetUserById(todoItemUpdateDto.User_Id);
+            if (!ModelState.IsValid || (user == null))
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
+            }
+
+            var todoItem = await _todoItemManager.GetTodoItemById(id);
+            if (todoItem == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+
+            var updatedTodoItem = _mapper.Map<TodoItem>(todoItemUpdateDto);
+            await _todoItemManager.UpdateTodoItem(id, updatedTodoItem);
             _response.StatusCode = HttpStatusCode.OK;
             return Ok(_response);
 
         }
 
 
-        [HttpDelete("{todoItemId}")]
-        public async Task<ActionResult> Delete(int todoItemId) 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id) 
         {
-            await _todoItemManager.DeleteTodoItem(todoItemId);
+            var todoItem = await _todoItemManager.GetTodoItemById(id);
+            if (todoItem == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+
+            await _todoItemManager.DeleteTodoItem(id);
             _response.StatusCode = HttpStatusCode.NoContent;
             return NoContent();
 
         }
 
-        [HttpGet("ById/{todoItemId}")]
-        public async Task<ActionResult<TodoItemDto>> Get(int todoItemId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TodoItemDto>> Get(int id)
         {
-            var todoItem = await _todoItemManager.GetTodoItemById(todoItemId);
+            var todoItem = await _todoItemManager.GetTodoItemById(id);
+            if (todoItem == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+
             var todoItemDto = _mapper.Map<TodoItemDto>(todoItem);
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = todoItemDto;
@@ -65,10 +101,16 @@ namespace CaseApi.Controllers
 
         }
 
-        [HttpGet("ByUser/{userId}")]
-        public async Task<ActionResult<ApiResponse>> GetListByUser(int userId)
+        [HttpGet("byUser/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetListByUser(int id)
         {
-            var todoItems = await _todoItemManager.GetTodoItemListByUser(userId);
+            var todoItems = await _todoItemManager.GetTodoItemListByUser(id);
+            if (todoItems == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
+            }
+
             var todoItemDtos = _mapper.Map<List<TodoItemDto>>(todoItems);
             _response.StatusCode = HttpStatusCode.OK;
             _response.Data = todoItemDtos;

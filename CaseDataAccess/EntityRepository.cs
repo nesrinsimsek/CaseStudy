@@ -23,13 +23,16 @@ namespace CaseDataAccess
             }
         }
 
-        public async Task Update(TEntity entity)
+
+        public async Task Update(Expression<Func<TEntity, bool>> filter, TEntity updatedEntity)
         {
             using (var context = new TContext())
             {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
+                var entityToUpdate = await context.Set<TEntity>().SingleOrDefaultAsync(filter);
+                updatedEntity.Id = entityToUpdate.Id;
+                context.Entry(entityToUpdate).CurrentValues.SetValues(updatedEntity);
                 await context.SaveChangesAsync();
+
             }
         }
 
