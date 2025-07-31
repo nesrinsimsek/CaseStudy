@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CaseApi.Common;
 using CaseApi.Dtos;
 using CaseBusiness.Abstract;
 using CaseDataAccess.Entities.Concrete;

@@ -2,7 +2,7 @@
 using CaseApi.Dtos;
 using CaseDataAccess.Entities.Concrete;
 
-namespace CaseApi
+namespace CaseApi.Mapping
 {
     public class MappingConfig : Profile
     {

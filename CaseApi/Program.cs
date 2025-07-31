@@ -1,5 +1,6 @@
 
 using CaseApi;
+using CaseApi.Mapping;
 using CaseBusiness.DependencyInjection;
 using CaseDataAccess;
 using CaseDataAccess.DependencyInjection;

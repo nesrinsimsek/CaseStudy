@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace CaseApi
+namespace CaseStudyMVC.Common
 {
     public class ApiResponse
     {
