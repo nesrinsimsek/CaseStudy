@@ -1,11 +1,15 @@
-using CaseStudyMVC.DependencyInjection;
+using CaseStudyMVC.Services.Abstract;
+using CaseStudyMVC.Services.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-MvcServiceRegistration.RegisterMvcServices(builder.Services);
+builder.Services.AddHttpClient<ITodoItemService, TodoItemService>();
+builder.Services.AddScoped<ITodoItemService, TodoItemService>();
+builder.Services.AddHttpClient<IUserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
