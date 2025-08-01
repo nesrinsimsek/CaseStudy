@@ -38,11 +38,6 @@ namespace CaseBusiness.Concrete
             return await _todoItemDal.GetList();
         }
 
-        public async Task<List<TodoItem>> GetTodoItemListByUser(int userId)
-        {
-            return await _todoItemDal.GetList(t => t.User_Id == userId);
-        }
-
         public async Task UpdateTodoItem(int id, TodoItem updatedItem)
         {
             await _todoItemDal.Update(t => t.Id == id, updatedItem);

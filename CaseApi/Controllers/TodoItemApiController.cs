@@ -102,21 +102,6 @@ namespace CaseApi.Controllers
 
         }
 
-        [HttpGet("byUser/{userId}")]
-        public async Task<ActionResult<ApiResponse>> GetListByUser(int id)
-        {
-            var todoItems = await _todoItemManager.GetTodoItemListByUser(id);
-            if (todoItems == null)
-            {
-                _response.StatusCode = HttpStatusCode.NotFound;
-                return NotFound(_response);
-            }
-
-            var todoItemDtos = _mapper.Map<List<TodoItemDto>>(todoItems);
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.Data = todoItemDtos;
-            return Ok(_response);
-        }
 
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetList()

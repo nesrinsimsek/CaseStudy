@@ -14,6 +14,5 @@ namespace CaseBusiness.Abstract
         Task DeleteTodoItem(int todoItemId);
         Task<TodoItem> GetTodoItemById(int todoItemId);
         Task<List<TodoItem>> GetTodoItemList();
-        Task<List<TodoItem>> GetTodoItemListByUser(int userId);
     }
 }
