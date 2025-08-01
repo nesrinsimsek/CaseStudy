@@ -8,15 +8,15 @@ namespace CaseStudyMVC.Services.Concrete
 {
     public class BaseService : IBaseService
     {
-        public IHttpClientFactory _httpClient { get; set; }
+        public IHttpClientFactory httpClient { get; set; }
 
         public BaseService(IHttpClientFactory httpClient)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
         }
         public async Task<T> SendAsync<T>(ApiRequest apiRequest)
         {
-            var client = _httpClient.CreateClient("CaseAPI");
+            var client = httpClient.CreateClient("CaseAPI");
             HttpRequestMessage message = new HttpRequestMessage();
             message.Headers.Add("Accept", "application/json");
             message.RequestUri = new Uri(apiRequest.Url);

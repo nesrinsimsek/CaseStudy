@@ -13,8 +13,8 @@ namespace CaseDataAccess.DependencyInjection
     {
         public static void RegisterDataAccessServices(IServiceCollection services)
         {
-            services.AddTransient<ITodoItemDal, TodoItemDal>();
-            services.AddTransient<IUserDal, UserDal>();
+            services.AddScoped<ITodoItemDal, TodoItemDal>();
+            services.AddScoped<IUserDal, UserDal>();
         }
     }
 }

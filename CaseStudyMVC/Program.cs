@@ -1,7 +1,11 @@
+using CaseStudyMVC.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+MvcServiceRegistration.RegisterMvcServices(builder.Services);
 
 var app = builder.Build();
 
@@ -22,6 +26,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=TodoItem}/{action=Create}/{id?}");
 
 app.Run();

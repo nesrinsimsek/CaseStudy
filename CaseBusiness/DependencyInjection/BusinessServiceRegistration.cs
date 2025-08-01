@@ -13,8 +13,8 @@ namespace CaseBusiness.DependencyInjection
     {
         public static void RegisterBusinessServices(IServiceCollection services)
         {
-            services.AddTransient<ITodoItemManager, TodoItemManager>();
-            services.AddTransient<IUserManager, UserManager>();
+            services.AddScoped<ITodoItemManager, TodoItemManager>();
+            services.AddScoped<IUserManager, UserManager>();
         }
     }
 }
