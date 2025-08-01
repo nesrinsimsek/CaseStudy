@@ -48,7 +48,7 @@ namespace CaseDataAccess
 
             modelBuilder.Entity<TodoItem>()
             .Property(t => t.CreatedAt)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("GETDATE()");
 
         }
     }
