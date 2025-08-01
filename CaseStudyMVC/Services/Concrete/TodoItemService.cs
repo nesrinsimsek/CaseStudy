@@ -54,5 +54,17 @@ namespace CaseStudyMVC.Services.Concrete
             });
         }
 
+        public Task<T> UpdateAsync<T>(int id, TodoItemUpdateDto todoItemUpdateDto)
+        {
+            return SendAsync<T>(new ApiRequest()
+            {
+                HttpMethodType = ApiHttpMethod.MethodType.PUT,
+                Data = todoItemUpdateDto,
+                Url = todoItemApiUrl + "/api/todoitems" + id
+            });
+
+
+        }
+
     }
 }

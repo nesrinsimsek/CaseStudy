@@ -1,7 +1,10 @@
+using CaseStudyMVC.Mapping;
 using CaseStudyMVC.Services.Abstract;
 using CaseStudyMVC.Services.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

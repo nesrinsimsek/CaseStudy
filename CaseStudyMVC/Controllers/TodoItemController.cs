@@ -1,4 +1,5 @@
-﻿using CaseStudyMVC.Common;
+﻿using AutoMapper;
+using CaseStudyMVC.Common;
 using CaseStudyMVC.Dtos;
 using CaseStudyMVC.Models;
 using CaseStudyMVC.Services.Abstract;
@@ -11,10 +12,13 @@ namespace CaseStudyMVC.Controllers
     {
         private readonly ITodoItemService _todoItemService;
         private readonly IUserService _userService;
-        public TodoItemController(ITodoItemService todoItemService, IUserService userService)
+        private readonly IMapper _mapper;
+        public TodoItemController(ITodoItemService todoItemService, IUserService userService, IMapper mapper)
         {
             _todoItemService = todoItemService;
             _userService = userService;
+            _mapper = mapper;
+
         }
 
         [HttpGet]
@@ -46,8 +50,19 @@ namespace CaseStudyMVC.Controllers
 
         public async Task<IActionResult> DeleteItem(int id)
         {
-            var response = await _todoItemService.DeleteAsync<ApiResponse>(id);
+            await _todoItemService.DeleteAsync<ApiResponse>(id);
+            return RedirectToAction("Index", "TodoItem");
 
+        }
+
+        
+        public async Task<IActionResult> UpdateCompletedAttribute(int id)
+        {
+            var response = await _todoItemService.GetAsync<ApiResponse>(id);
+            var updatedItemDto = JsonConvert.DeserializeObject<TodoItemDto>(Convert.ToString(response.Data));
+            updatedItemDto.IsCompleted = true;
+            var todoItemUpdateDto = _mapper.Map<TodoItemUpdateDto>(updatedItemDto);
+            await _todoItemService.UpdateAsync<ApiResponse>(id, todoItemUpdateDto);
             return RedirectToAction("Index", "TodoItem");
 
         }
