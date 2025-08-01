@@ -8,7 +8,6 @@ namespace CaseStudyMVC.Services.Abstract
         Task<T> GetAsync<T>(int id);
         Task<T> GetByUserAsync<T>(int userId);
         Task<T> CreateAsync<T>(TodoItemCreateDto dto);
-        Task<T> UpdateAsync<T>(int id, TodoItemUpdateDto dto);
         Task<T> DeleteAsync<T>(int id);
 
     }
