@@ -60,7 +60,7 @@ namespace CaseStudyMVC.Services.Concrete
             {
                 HttpMethodType = ApiHttpMethod.MethodType.PUT,
                 Data = todoItemUpdateDto,
-                Url = todoItemApiUrl + "/api/todoitems" + id
+                Url = todoItemApiUrl + "/api/todoitems/" + id
             });
 
 
