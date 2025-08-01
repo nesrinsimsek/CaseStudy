@@ -55,7 +55,7 @@ On the item listing screen, you can:
 
 * View details of the items
 * Use the **Delete** button next to an item to remove it from the database
-* See a **Complete** button, which currently **does not** update the IsCompleted field in the database. (This functionality is not fully working on the UI yet, but I plan to improve and fix it with further development.)
+* See a **Complete** button, which currently **does not** update the **IsCompleted** field in the database. (This functionality is not fully working on the UI yet, but I plan to improve and fix it with further development.)
 
-However, **all CRUD operations** are fully functional and testable through the API endpoints.
+**However, all CRUD operations are fully functional and testable through the API endpoints.**
 
