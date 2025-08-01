@@ -1,6 +1,6 @@
 ﻿namespace CaseStudyMVC.Utility
 {
-    public static class HttpMethod
+    public static class ApiHttpMethod
     {
         public enum MethodType
         {
