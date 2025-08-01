@@ -44,5 +44,13 @@ namespace CaseStudyMVC.Controllers
             return View(todoItems);
         }
 
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            var response = await _todoItemService.DeleteAsync<ApiResponse>(id);
+
+            return RedirectToAction("Index", "TodoItem");
+
+        }
+
     }
 }
