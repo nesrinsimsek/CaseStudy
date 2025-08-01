@@ -56,7 +56,7 @@ namespace CaseStudyMVC.Controllers
         }
 
         
-        public async Task<IActionResult> UpdateCompletedAttribute(int id)
+        public async Task<IActionResult> MarkAsCompleted(int id)
         {
             var response = await _todoItemService.GetAsync<ApiResponse>(id);
             var updatedItemDto = JsonConvert.DeserializeObject<TodoItemDto>(Convert.ToString(response.Data));

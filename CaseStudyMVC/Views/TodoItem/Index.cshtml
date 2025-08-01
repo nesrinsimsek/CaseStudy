@@ -78,7 +78,7 @@
                 <td>@item.Description</td>
                 <td>@(item.IsCompleted ? "Completed" : "Waiting")</td>
                 <td>
-                    <form asp-action="UpdateCompletedAttribute" asp-controller="TodoItem" method="post" style="display:inline;">
+                    <form asp-action="MarkAsCompleted" asp-controller="TodoItem" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@item.Id" />
                         <button type="submit" class="btn btn-complete">Complete</button>
                     </form>
