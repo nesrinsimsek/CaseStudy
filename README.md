@@ -25,7 +25,7 @@ To add and apply migrations, follow these steps:
 * Set **CaseApi** as the **startup project**.
 * In **Package Manager Console**, set the **default project** to **CaseDataAccess**.
 
-## Running the Project
+## Running the API
 
 To run the API, set the **CaseApi** project located in the **Api** folder as the **startup project**.
 
