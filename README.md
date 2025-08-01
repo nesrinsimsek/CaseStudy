@@ -59,5 +59,3 @@ On the item listing screen, you can:
 
 However, **all CRUD operations** are fully functional and testable through the API endpoints.
 
----
-
