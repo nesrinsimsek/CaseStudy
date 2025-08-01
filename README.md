@@ -9,6 +9,22 @@ This project is built using a **layered architecture**. It is structured into th
 * **DataAccess**
 * **Presentation**
 
+## Database Configuration
+
+To connect the project to your local SQL Server instance, update the connection string in the following files:
+
+* **Api/appsettings.json**
+* **DataAccess/AppDbContext.cs**
+
+Replace the default connection string with your own SQL Server instance settings.
+
+## Applying Migrations
+
+To add and apply migrations, follow these steps:
+
+* Set **CaseApi** as the **startup project**.
+* In **Package Manager Console**, set the **default project** to **CaseDataAccess**.
+
 ## Running the Project
 
 To run the API, set the **CaseApi** project located in the **Api** folder as the **startup project**.
