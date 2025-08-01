@@ -43,9 +43,15 @@ namespace CaseStudyMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var response = await _todoItemService.GetAllAsync<ApiResponse>();
-            var todoItems = JsonConvert.DeserializeObject<List<TodoItemDto>>(Convert.ToString(response.Data));
-            return View(todoItems);
+            var responseForTodoItem = await _todoItemService.GetAllAsync<ApiResponse>();
+            var responseForUser = await _userService.GetAllAsync<ApiResponse>();
+            var displayTodoItemViewModel = new DisplayTodoItemViewModel
+            {
+                TodoItems = JsonConvert.DeserializeObject<List<TodoItemDto>>(Convert.ToString(responseForTodoItem.Data)),
+                Users = JsonConvert.DeserializeObject<List<UserDto>>(Convert.ToString(responseForUser.Data))
+            };
+            
+            return View(displayTodoItemViewModel);
         }
 
         public async Task<IActionResult> DeleteItem(int id)

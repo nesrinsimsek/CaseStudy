@@ -1,94 +1,97 @@
 ﻿@using CaseStudyMVC.Dtos
-@model List<TodoItemDto>
+@model DisplayTodoItemViewModel
 
 @{
-    ViewData["Title"] = "To-Do Lists";
+	ViewData["Title"] = "To-Do Lists";
 }
 
 <style>
-    body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f9f9f9;
-        padding: 20px;
-    }
+	body {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		background-color: #f9f9f9;
+		padding: 20px;
+	}
 
-    h2 {
-        color: #333;
-        margin-bottom: 20px;
-    }
+	h2 {
+		color: #333;
+		margin-bottom: 20px;
+	}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		background-color: #fff;
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
 
-    thead {
-        background-color: #007acc;
-        color: #fff;
-    }
+	thead {
+		background-color: #007acc;
+		color: #fff;
+	}
 
-    th, td {
-        padding: 12px 16px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+	th, td {
+		padding: 12px 16px;
+		text-align: left;
+		border-bottom: 1px solid #ddd;
+	}
 
-    tr:hover {
-        background-color: #f1f1f1;
-    }
+	tr:hover {
+		background-color: #f1f1f1;
+	}
 
-    .btn {
-        padding: 6px 12px;
-        margin-right: 6px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        color: #fff;
-    }
+	.btn {
+		padding: 6px 12px;
+		margin-right: 6px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		color: #fff;
+	}
 
-    .btn-complete {
-        background-color: #28a745;
-    }
+	.btn-complete {
+		background-color: #28a745;
+	}
 
-    .btn-delete {
-        background-color: #dc3545;
-    }
+	.btn-delete {
+		background-color: #dc3545;
+	}
 </style>
 
 <h2>@ViewData["Title"]</h2>
 
 <table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Operations</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Title</td>
-                <td>@item.Description</td>
-                <td>@(item.IsCompleted ? "Completed" : "Waiting")</td>
-                <td>
-                    <form asp-action="MarkAsCompleted" asp-controller="TodoItem" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-complete">Complete</button>
-                    </form>
+	<thead>
+		<tr>
+			<th>User</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Status</th>
+			<th>Operations</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.TodoItems)
+		{
+			var user = Model.Users.FirstOrDefault(u => u.Id == item.User_Id);
+			<tr>
+				<td>@user.FullName</td>
+				<td>@item.Title</td>
+				<td>@item.Description</td>
+				<td>@(item.IsCompleted ? "Completed" : "Waiting")</td>
+				<td>
+					<form asp-action="MarkAsCompleted" asp-controller="TodoItem" method="post" style="display:inline;">
+						<input type="hidden" name="id" value="@item.Id" />
+						<button type="submit" class="btn btn-complete">Complete</button>
+					</form>
 
-                    <form asp-action="DeleteItem" asp-controller="TodoItem" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete?');">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
+					<form asp-action="DeleteItem" asp-controller="TodoItem" method="post" style="display:inline;">
+						<input type="hidden" name="id" value="@item.Id" />
+						<button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete?');">Delete</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
