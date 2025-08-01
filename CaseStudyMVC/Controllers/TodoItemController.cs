@@ -33,13 +33,16 @@ namespace CaseStudyMVC.Controllers
         public async Task<IActionResult> Create(TodoItemCreateDto todoItemCreateDto)
         {
             await _todoItemService.CreateAsync<ApiResponse>(todoItemCreateDto);
-            return RedirectToAction("ListByUser", new { userId = todoItemCreateDto.User_Id});
+            return RedirectToAction("Index", "TodoItem");
         }
-        public async Task<IActionResult> ListByUser(int userId)
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var response = await _todoItemService.GetByUserAsync<ApiResponse>(userId);
+            var response = await _todoItemService.GetAllAsync<ApiResponse>();
             var todoItems = JsonConvert.DeserializeObject<List<TodoItemDto>>(Convert.ToString(response.Data));
             return View(todoItems);
         }
+
     }
 }

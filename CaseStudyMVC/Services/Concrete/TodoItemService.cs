@@ -54,15 +54,5 @@ namespace CaseStudyMVC.Services.Concrete
             });
         }
 
-        public Task<T> GetByUserAsync<T>(int userId)
-        {
-            return SendAsync<T>(new ApiRequest()
-            {
-                HttpMethodType = ApiHttpMethod.MethodType.GET,
-                Url = todoItemApiUrl + "/api/Books/byUser/" + userId
-
-            });
-        }
-
     }
 }
