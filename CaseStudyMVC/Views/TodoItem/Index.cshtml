@@ -67,6 +67,7 @@
 			<th>User</th>
 			<th>Title</th>
 			<th>Description</th>
+			<th>Due Date</th>
 			<th>Status</th>
 			<th>Operations</th>
 		</tr>
@@ -79,6 +80,7 @@
 				<td>@user.FullName</td>
 				<td>@item.Title</td>
 				<td>@item.Description</td>
+				<td>@item.DueDate</td>
 				<td>@(item.IsCompleted ? "Completed" : "Waiting")</td>
 				<td>
 					<form asp-action="MarkAsCompleted" asp-controller="TodoItem" method="post" style="display:inline;">
